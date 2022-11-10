@@ -71,7 +71,7 @@ public class Main {
 제네릭은 클래스, 메소드에서 사용할 데이터 타입을 나중에 확정하는 기법이다. 나중에라는 말은 클래스나 메소드를 선언할 때가 아닌 사용할 때, 즉 인스턴스를 생성할 때나 메소드를 호출할 때 정한다는 의미이다.
 ```
 
-![참고 자료](https://atoz-develop.tistory.com/entry/JAVA-%EC%A0%9C%EB%84%A4%EB%A6%ADGenerics-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-%EB%A9%94%EC%86%8C%EB%93%9C)
+[참고 자료](https://atoz-develop.tistory.com/entry/JAVA-%EC%A0%9C%EB%84%A4%EB%A6%ADGenerics-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-%EB%A9%94%EC%86%8C%EB%93%9C)
 
 ```
 중간점검!
