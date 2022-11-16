@@ -327,5 +327,201 @@ if(set.contains("Bread")){ // 해당 원소가 set에 존재하는지 확인
 ### 대량 연산 메소드
 
 ```java
+HashSet<Integer> set1 = new HashSet<Integer>();
+HashSet<Integer> set2 = new HashSet<Integer>();
+HashSet<Integer> set3 = new HashSet<Integer>();
+HashSet<Integer> set4 = new HashSet<Integer>();
 
+set1.add(1);
+set1.add(2);
+set1.add(3);
+set1.add(7);
+// [1, 2, 3, 7]
+
+set2.add(1);
+set2.add(4);
+set2.add(7);
+set2.add(8);
+// [1, 4, 7, 8]
+
+if (set1.containsAll(set2)){
+    System.out.println("set2는 set1의 부분집합!");
+} else {
+    System.out.println("부분집합이 아님!");
+}
+
+set1.addAll(set2);
+// [1, 2, 3, 4, 7, 8]
+
+if (set1.containsAll(set2)){
+    System.out.println("set2는 set1의 부분집합!");
+} else {
+    System.out.println("부분집합이 아님!");
+}
+
+set1.removeAll(set2);
+// [2, 3]
+
+set3.add(2);
+set3.add(3);
+// [2, 3]
+
+if (set1.equals(set3)){
+    System.out.println("같다!");
+} else {
+    System.out.println("다르다!");
+}
+
+set2.retainAll(set1); // 교집합 찾기
+//[]
+
+if (set2.equals(set4)){
+    System.out.println("비었다!");
+} else {
+    System.out.println("안비었다!");
+}
+```
+
+- s1.containAll(s2) - s2가 s1의 부분집합이면 true 반환
+- s1.addAll(s2) - s1을 s1과 s2의 합집합으로 만든다.
+- s1.retainAll(s2) - s1을 s1과 s2의 교집합으로 만든다.
+- s1.removeAll(s2) - s1을 s1과 s2의 차집합으로 만든다.
+
+> 중간점검! <br>
+1. Set은 어떤 타입의 애플리케이션에 유용한가? <br>
+ --> Set은 중복이 되면 안되는 데이터가 있을때 유용할 것이다. <br><br>
+2. Set과 List의 차이점은 무엇인가?
+ --> List는 순서가 있는 반면, Set은 순서를 보장하지 않는 collection이다. 또한, Set은 중복이 허용되지 않지만 List의 item은 중복이 허용된다. <br><br>
+
+## Map
+- Map은 많은 데이터 중에서 원하는 데이터를 빠르게 찾을 수 있는 자료 구조이다.
+
+```java
+Map<String, String> map = Map.of(
+    "kim", "1234",
+    "park", "pass",
+    "lee", "word"
+);
+//map.put("na", "rrr");  // map.of로 초기화하면 immutalbe 객체로 반환하기 때문에 put이 되지 않는다.
+System.out.println(map);
+```
+
+```java
+Map<String, String> map = new HashMap<String, String>();
+
+        map.put("kim", "1234");
+        map.put("park", "pass");
+        map.put("lee", "word");
+
+        System.out.println(map.get("lee"));// 키를 가지고 값을 참조한다.
+
+        // 1. for-each 구문과 keySet()을 사용한는 방법
+        for (var key: map.keySet()) { // 모든 항목을 방문한다. var를 통해서 변수 타입 추론을 사용할 수 있다.
+        var value = map.get(key);
+        System.out.println("key=" + key + ", value=" + value);
+        }
+
+        // 2. 반복자를 사용하는 방법
+        Iterator<String> it = map.keySet().iterator();
+        while (it.hasNext()){
+            String key = it.next();
+            System.out.println("key=" + key + ", value=" + map.get(key));
+        }
+
+        // 3. Stream 라이브러리를 사용하는 방법
+        map.forEach((key, value) -> {
+            System.out.println("key=" + key + ", value=" + value);
+        });
+
+        System.out.println(map.values()); // 모든 value값들을 list로 반환
+
+        map.remove(3);// 하나의 항목을 삭제한다.
+
+        map.put("choi", "password");// 하나의 항목을 대치한다.
+
+        System.out.println(map);
+```
+
+> 중간점검! <br>
+1. Map의 각 원소들은 ___와 ___의 두 부분으로 구성되어 있다. <br>
+ --> Key, Value <br><br>
+2. Map의 두 가지의 기본적인 연산은 무엇인가? <br>
+ --> put과 get 메서드 <br><br>
+
+## 큐(Queue)
+- 큐는 후단(tail)에서 원소를 추가하고, 전단(head)에서 원소를 삭제한다.
+- 자바에서 큐는 Queue 인터페이스로 정의되며, 이 Queue 인터페이스를 구현한 3개의 클래스가 주어진다. (ArrayDeque, LinkedList, PriorityQueue)
+
+### 큐 기본 연산
+```java
+Queue<Integer> q = new LinkedList<>();
+
+for (int i = 0; i < 5; i++){
+    q.add(i); // 값 추가 성공시 true 반환, 새로운 원소의 추가가 큐의 용량을 넘어서지 않으면 원소를 추가한다. (큐가 꽉 찬 경우 IllegalStateException 에러 발생)
+}
+System.out.println("큐의 요소: " + q);
+
+q.offer(6); // 값 추가 실패시 false 반환, 성공시 true 반환
+System.out.println("큐의 요소: " + q);
+
+int e = q.remove(); // 큐의 처음에 있는 원소를 제거하고 가져온다. (큐가 비었다면 NoSuchElementException 에러 발생)
+System.out.println("삭제된 요소: " + e);
+
+int p = q.poll(); // 큐의 처음에 있는 원소를 제거하고 가져온다.(큐가 비었다면 null 반환)
+System.out.println("삭제된 요소: " + p);
+
+System.out.println(q);
+```
+
+### 우선 순위큐
+- 우선 순위큐는 원소들이 무작위로 삽입되었더라도 정렬된 상태로 원소들을 추출한다. 즉 remove()를 호출할 때마다 가장 작은 원소가 추출된다.
+- 우선 순위큐는 heap이라고 하는 자료 구조를 내부적으로 사용한다.
+
+```java
+PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+pq.add(30);
+pq.add(20);
+pq.add(25);
+pq.add(1);
+
+System.out.println(pq); // 원소들이 무작위로 add되었다고 해도, 정렬된 상태로 원소들을 저장한다.
+System.out.println("삭제된 원소 : " + pq.remove());
+```
+
+## Collections 클래스
+- 정렬(Sorting)
+- 섞기(Shuffling)
+- 탐색(Searching)
+
+### 정렬
+```java
+String[] sample = {"i", "walk", "the", "line"};
+
+List<String> list = Arrays.asList(sample); // 배열을 List로 변경
+
+Collections.sort(list); // list를 정렬한다.
+System.out.println(list);
+```
+
+### 섞기
+```java
+List<Integer> list = new ArrayList<Integer>();
+for (int i=1; i<=10; i++){
+    list.add(i);
+}
+Collections.shuffle(list); // list를 섞는다.
+System.out.println(list);
+```
+
+### 탐색
+- 탐색(Searching)이란 리스트 안에서 원하는 원소를 찾는 것이다. 만약 리스트가 정렬되어 있지 않다면 처음부터 모든 원소를 방문할 수밖에 없다(선형 탐색). 하지만 리스트가 정렬되어 있다면 중간에 있는 원소와 먼저 비교하는 것이 좋다(이진 탐색).
+
+```java
+int key = 50;
+List<Integer> list = new ArrayList<Integer>();
+for (int i=0; i<100; i++){
+    list.add(i);
+}
+int index = Collections.binarySearch(list, key);
+System.out.println("탐색의 반환값 = " + index);
 ```
